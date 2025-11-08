@@ -7,4 +7,4 @@ my_echo
 .devcontainer/
 
 # macOS
-.DS_Store
+.DS_Storeencoder
