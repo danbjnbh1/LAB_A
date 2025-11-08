@@ -1,42 +1,39 @@
-# Build directory for object files
-BUILD_DIR = build
-
-all: $(BUILD_DIR) main my_echo encoder
+all: build main my_echo encoder
 
 # Create build directory
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+build:
+	mkdir -p build
 
 # Link main executable (in root)
-main: $(BUILD_DIR)/main.o $(BUILD_DIR)/numbers.o $(BUILD_DIR)/add.o
-	gcc -g -m32 -Wall -o main $(BUILD_DIR)/main.o $(BUILD_DIR)/numbers.o $(BUILD_DIR)/add.o
+main: build/main.o build/numbers.o build/add.o
+	gcc -g -m32 -Wall -o main build/main.o build/numbers.o build/add.o
 
 # Link my_echo executable (in root)
-my_echo: $(BUILD_DIR)/my_echo.o
-	gcc -g -m32 -Wall -o my_echo $(BUILD_DIR)/my_echo.o
+my_echo: build/my_echo.o
+	gcc -g -m32 -Wall -o my_echo build/my_echo.o
 
 # Link encoder executable (in root)
-encoder: $(BUILD_DIR)/encoder.o
-	gcc -g -m32 -Wall -o encoder $(BUILD_DIR)/encoder.o
+encoder: build/encoder.o
+	gcc -g -m32 -Wall -o encoder build/encoder.o
 
 # Compile C files to build directory
-$(BUILD_DIR)/main.o: main.c
-	gcc -g -m32 -Wall -c main.c -o $(BUILD_DIR)/main.o
+build/main.o: main.c
+	gcc -g -m32 -Wall -c main.c -o build/main.o
 
-$(BUILD_DIR)/numbers.o: numbers.c
-	gcc -g -m32 -Wall -c numbers.c -o $(BUILD_DIR)/numbers.o
+build/numbers.o: numbers.c
+	gcc -g -m32 -Wall -c numbers.c -o build/numbers.o
 
-$(BUILD_DIR)/my_echo.o: my_echo.c
-	gcc -g -m32 -Wall -c my_echo.c -o $(BUILD_DIR)/my_echo.o
+build/my_echo.o: my_echo.c
+	gcc -g -m32 -Wall -c my_echo.c -o build/my_echo.o
 
-$(BUILD_DIR)/encoder.o: encoder.c
-	gcc -g -m32 -Wall -c encoder.c -o $(BUILD_DIR)/encoder.o
+build/encoder.o: encoder.c
+	gcc -g -m32 -Wall -c encoder.c -o build/encoder.o
 
 # Assemble assembly file to build directory
-$(BUILD_DIR)/add.o: add.s
-	nasm -g -f elf -w+all -o $(BUILD_DIR)/add.o add.s
+build/add.o: add.s
+	nasm -g -f elf -w+all -o build/add.o add.s
 
 clean:
-	rm -rf $(BUILD_DIR) main my_echo encoder
+	rm -rf build main my_echo encoder
 
 .PHONY: all clean
