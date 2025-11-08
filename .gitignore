@@ -1,11 +1,10 @@
 # Build artifacts
 build/
-main
-my_echo
+bin/
+encoder
 
 # Dev Container (not used)
 .devcontainer/
 
 # macOS
 .DS_Storeencoder
-encoder

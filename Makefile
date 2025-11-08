@@ -1,16 +1,20 @@
-all: build main my_echo encoder
+all: bin build bin/main bin/my_echo encoder
+
+# Create bin directory
+bin:
+	mkdir -p bin
 
 # Create build directory
 build:
 	mkdir -p build
 
-# Link main executable (in root)
-main: build/main.o build/numbers.o build/add.o
-	gcc -g -m32 -Wall -o main build/main.o build/numbers.o build/add.o
+# Link main executable to bin/
+bin/main: build/main.o build/numbers.o build/add.o
+	gcc -g -m32 -Wall -o bin/main build/main.o build/numbers.o build/add.o
 
-# Link my_echo executable (in root)
-my_echo: build/my_echo.o
-	gcc -g -m32 -Wall -o my_echo build/my_echo.o
+# Link my_echo executable to bin/
+bin/my_echo: build/my_echo.o
+	gcc -g -m32 -Wall -o bin/my_echo build/my_echo.o
 
 # Link encoder executable (in root)
 encoder: build/encoder.o
@@ -34,6 +38,6 @@ build/add.o: add.s
 	nasm -g -f elf -w+all -o build/add.o add.s
 
 clean:
-	rm -rf build main my_echo encoder
+	rm -rf build bin encoder
 
 .PHONY: all clean
